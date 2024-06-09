@@ -20,5 +20,70 @@ Este proyecto es una aplicación Java Swing que cambia el color de fondo de una 
 2. Importar el proyecto en Eclipse.
 3. Ejecutar la clase `ColorChanger` para iniciar la aplicación.
 
-### Funcionalidades (Cross-Cutting Concerns)
+## Funcionalidades 
+**1)**
+
+![img1](imgs/img1.png)
+
+  **currentColorChanger:** Un atributo que guarda la referencia a la instancia actual de ColorChanger.
+  
+  **LOG_FILE:** Una constante que define el nombre del archivo de log donde se registran los cambios de color.
+
+**2)**
+
+![img1](imgs/img2.png)
+
+- **Poincut buttonclicked:** Se define un pointcut que captura la ejecución del método notifyObservers de la clase ColorChanger y pasa el argumento color a los consejos (advice).
+
+- Este advice after se ejecuta después de que **notifyObservers** es llamado. Obtiene la instancia actual de ColorChanger.
+ Si la instancia es válida, usa **SwingUtilities.invokeLater** para cambiar el color de fondo de la ventana en el hilo de despacho de eventos de Swing. Imprime un mensaje en la consola indicando el cambio de color.
+
+- Llama al método **logColorChange()** para registrar el cambio de color en un archivo de log.
+
+**3)**
+
+![img1](imgs/img3.png)
+
+- **Pointcut colorChangerConstructor:** Se Define un pointcut que captura la creación de una nueva instancia de ColorChanger.
+
+**4)**
+
+![img1](imgs/img4.png)
+
+**- Advice before:**
+- Este advice se ejecuta antes de que el constructor de ColorChanger sea ejecutado.
+- Asigna la instancia creada de ColorChanger al atributo currentColorChanger.
+  
+**- Método getCurrentColorChanger:**
+- Método auxiliar que devuelve la instancia actual de ColorChanger.
+
+  
+
+## Funcionalidad extra (Aspectos) | **Separación de requerimientos (core y cross cutting concerns)**
+
+![img1](imgs/img5.png)
+
+
+**Cross cutting concerns:**
+
+Estos son requisitos que afectan a múltiples partes de la aplicación pero no están centralizados en una sola funcionalidad principal.
+Un ejemplo de estos concerns se ve en el método realizado como funcionalidad extra:
+
+**Método logColorChange()** utilizado en un advice anterior que:
+
+- Registra el cambio de color en un archivo de log con la marca de tiempo actual.
+  
+- Usa BufferedWriter para escribir en el archivo de manera eficiente.
+  
+- Maneja posibles excepciones de E/S (Input/Output).
+
+La lógica del logging del reporte y la actualización del color de fondo se manejan en el aspecto, lo que significa que no se mezclan con la lógica principal de la clase ColorChanger.
+Esto reduce el acoplamiento entre las funcionalidades principales y las transversales, facilitando cambios y mantenimiento.
+
+## **En general**
+Nuestras preocupaciones principales y transversales se separan en dos archivos:
+
+- **Core Concern (Código Principal):** ColorChanger se centra exclusivamente en la lógica principal de la aplicación, es decir, la creación de la interfaz gráfica y la gestión de los observadores.
+
+- **Cross-Cutting Concern (Código Transversal):** ColorChangeAspect gestiona la lógica adicional que cruza varias partes de la aplicación, como el cambio del color de fondo y la escritura en el archivo.
 
