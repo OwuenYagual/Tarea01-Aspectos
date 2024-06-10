@@ -80,10 +80,5 @@ Un ejemplo de estos concerns se ve en el método realizado como funcionalidad ex
 La lógica del logging del reporte y la actualización del color de fondo se manejan en el aspecto, lo que significa que no se mezclan con la lógica principal de la clase ColorChanger.
 Esto reduce el acoplamiento entre las funcionalidades principales y las transversales, facilitando cambios y mantenimiento.
 
-## **En general**
-Nuestras preocupaciones principales y transversales se separan en dos archivos:
-
-- **Core Concern (Código Principal):** ColorChanger se centra exclusivamente en la lógica principal de la aplicación, es decir, la creación de la interfaz gráfica y la gestión de los observadores.
-
-- **Cross-Cutting Concern (Código Transversal):** ColorChangeAspect gestiona la lógica adicional que cruza varias partes de la aplicación, como el cambio del color de fondo y la escritura en el archivo.
-
+## Evidencia Trabajo Colaborativo
+![img6](imgs/img6.png)
